@@ -11,7 +11,7 @@ $geminiApiKey = getenv('GEMINI_API_KEY') ?: '';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-screen bg-transparent flex items-center justify-center p-4">
+  <body class="min-h-screen bg-slate-200 flex items-center justify-center p-4">
     <div class="w-full max-w-[440px] h-[min(620px,calc(100vh-2rem))] rounded-[28px] border border-slate-200 bg-white overflow-hidden flex flex-col">
       <header class="h-20 px-6 bg-slate-100 border-b border-slate-200 flex items-center justify-between">
         <div class="flex items-center gap-3">
