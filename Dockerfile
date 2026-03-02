@@ -2,7 +2,9 @@ FROM php:8.2-cli
 
 WORKDIR /app
 
-COPY . .
+COPY UD-Voice-Agent ./UD-Voice-Agent
+
+WORKDIR /app/UD-Voice-Agent
 
 EXPOSE 10000
 
