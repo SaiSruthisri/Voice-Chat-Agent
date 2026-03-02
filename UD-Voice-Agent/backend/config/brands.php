@@ -16,6 +16,7 @@ return [
     // Example brand matching your current React demo
     'voice_first' => [
         'mode' => 'hybrid', // chat_only | voice_only | hybrid
+        'assetBaseUrl' => '/assets',
         'brand' => [
             'title' => 'Spice Garden AI',
             'subtitle' => 'Voice Ordering Assistant',
@@ -33,6 +34,7 @@ return [
     // Safe default brand – primarily chat
     'default' => [
         'mode' => 'chat_only',
+        'assetBaseUrl' => '/assets',
         'brand' => [
             'title' => 'Spice Garden',
             'subtitle' => 'AI Assistant',

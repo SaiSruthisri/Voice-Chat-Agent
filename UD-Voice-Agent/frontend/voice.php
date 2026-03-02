@@ -2,6 +2,10 @@
 
 $brandId = isset($_GET['brandId']) ? htmlspecialchars($_GET['brandId'], ENT_QUOTES, 'UTF-8') : 'default';
 $geminiApiKey = getenv('GEMINI_API_KEY') ?: '';
+$isEmbedded = isset($_GET['embed']) && $_GET['embed'] === '1';
+$assetBaseUrl = isset($_GET['assetBaseUrl']) && is_string($_GET['assetBaseUrl'])
+  ? htmlspecialchars($_GET['assetBaseUrl'], ENT_QUOTES, 'UTF-8')
+  : '/assets';
 ?>
 <!doctype html>
 <html lang="en">
@@ -11,8 +15,8 @@ $geminiApiKey = getenv('GEMINI_API_KEY') ?: '';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-screen bg-slate-200 flex items-center justify-center p-4">
-    <div class="w-full max-w-[440px] h-[min(620px,calc(100vh-2rem))] rounded-[28px] border border-slate-200 bg-white overflow-hidden flex flex-col">
+  <body class="<?php echo $isEmbedded ? 'h-screen bg-slate-200 flex items-center justify-center' : 'min-h-screen bg-slate-200 flex items-center justify-center p-4'; ?>">
+    <div class="<?php echo $isEmbedded ? 'w-full h-full rounded-[28px] border border-slate-200 bg-white overflow-hidden flex flex-col' : 'w-full max-w-[440px] h-[min(620px,calc(100vh-2rem))] rounded-[28px] border border-slate-200 bg-white overflow-hidden flex flex-col'; ?>">
       <header class="h-20 px-6 bg-slate-100 border-b border-slate-200 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-emerald-700 text-white flex items-center justify-center">
@@ -26,7 +30,7 @@ $geminiApiKey = getenv('GEMINI_API_KEY') ?: '';
 
         <div class="flex items-center gap-2 text-slate-600">
           <a
-            href="chat.php?brandId=<?php echo urlencode($brandId); ?>"
+            href="chat.php?brandId=<?php echo urlencode($brandId); ?><?php echo $isEmbedded ? '&embed=1' : ''; ?>&assetBaseUrl=<?php echo urlencode($assetBaseUrl); ?>"
             class="px-3 py-1.5 rounded-lg border border-slate-300 bg-slate-50 text-slate-700 text-xs hover:bg-slate-100 transition"
           >
             Chat
@@ -66,10 +70,9 @@ $geminiApiKey = getenv('GEMINI_API_KEY') ?: '';
             <div class="relative w-36 h-36 rounded-full bg-teal-800 text-white flex items-center justify-center overflow-hidden">
               <img
                 id="voice-logo"
-                src="/assets/voice-bot-logo.png"
+                src="<?php echo $assetBaseUrl; ?>/voice-bot-logo.png"
                 alt="Voice assistant"
                 class="w-full h-full object-cover"
-                onerror="this.classList.add('hidden'); document.getElementById('voice-logo-fallback')?.classList.remove('hidden');"
               />
               <span id="voice-logo-fallback" class="hidden font-semibold text-5xl leading-none">N</span>
             </div>
@@ -149,6 +152,38 @@ $geminiApiKey = getenv('GEMINI_API_KEY') ?: '';
 
       const brandId = '<?php echo $brandId; ?>';
       const apiKey = '<?php echo htmlspecialchars($geminiApiKey, ENT_QUOTES, 'UTF-8'); ?>';
+      const assetBaseUrl = '<?php echo $assetBaseUrl; ?>';
+      const logoElement = document.getElementById('voice-logo');
+      const logoFallbackElement = document.getElementById('voice-logo-fallback');
+
+      if (logoElement) {
+        const normalizedAssetBaseUrl = assetBaseUrl.replace(/\/$/, '');
+        const logoCandidates = [
+          normalizedAssetBaseUrl + '/voice-bot-logo.png',
+          '../assets/voice-bot-logo.png',
+          'assets/voice-bot-logo.png',
+          '../../assets/voice-bot-logo.png',
+        ];
+        let logoIndex = 0;
+
+        const tryNextLogo = () => {
+          if (logoIndex >= logoCandidates.length) {
+            logoElement.classList.add('hidden');
+            logoFallbackElement?.classList.remove('hidden');
+            return;
+          }
+          logoElement.src = logoCandidates[logoIndex];
+          logoIndex += 1;
+        };
+
+        logoElement.addEventListener('error', tryNextLogo);
+        logoElement.addEventListener('load', () => {
+          logoElement.classList.remove('hidden');
+          logoFallbackElement?.classList.add('hidden');
+        });
+
+        tryNextLogo();
+      }
 
       const VOICE_SYSTEM_INSTRUCTION = `# SPICE GARDEN VOICE ASSISTANT
 

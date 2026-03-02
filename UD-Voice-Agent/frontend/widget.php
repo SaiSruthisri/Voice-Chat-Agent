@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-screen bg-slate-200 flex items-center justify-center">
-    <div id="ud-voice-agent-root" class="w-full max-w-[440px]"></div>
+  <body class="min-h-screen bg-slate-200 flex items-center justify-center p-4">
+    <div id="ud-voice-agent-root" class="w-full max-w-[440px] h-[min(620px,calc(100vh-2rem))]"></div>
 
     <script>
       (function () {
@@ -25,21 +25,25 @@
           .then(res => res.json())
           .then(config => {
             const mode = config.mode || 'chat_only';
+            const assetBaseUrl = typeof config.assetBaseUrl === 'string' && config.assetBaseUrl.trim() !== ''
+              ? config.assetBaseUrl.trim()
+              : '/assets';
             const title = (config.brand && config.brand.title) || 'Spice Garden';
             const subtitle = (config.brand && config.brand.subtitle) || 'AI Assistant';
+            const sharedQuery = 'brandId=' + encodeURIComponent(brandId) + '&embed=1&assetBaseUrl=' + encodeURIComponent(assetBaseUrl);
 
             if (mode === 'voice_only') {
-              root.innerHTML = '<iframe src="voice.php?brandId=' + encodeURIComponent(brandId) + '" class="w-full h-[560px] border-0 rounded-[28px]"></iframe>';
+              root.innerHTML = '<iframe src="voice.php?' + sharedQuery + '" class="w-full h-full border-0 rounded-[28px]"></iframe>';
               return;
             }
 
             if (mode === 'chat_only') {
-              root.innerHTML = '<iframe src="chat.php?brandId=' + encodeURIComponent(brandId) + '" class="w-full h-[560px] border-0 rounded-[28px]"></iframe>';
+              root.innerHTML = '<iframe src="chat.php?' + sharedQuery + '" class="w-full h-full border-0 rounded-[28px]"></iframe>';
               return;
             }
 
             // hybrid: default to voice with optional switch UI inside the iframe/app
-            root.innerHTML = '<iframe src="voice.php?brandId=' + encodeURIComponent(brandId) + '" class="w-full h-[560px] border-0 rounded-[28px]"></iframe>';
+            root.innerHTML = '<iframe src="voice.php?' + sharedQuery + '" class="w-full h-full border-0 rounded-[28px]"></iframe>';
           })
           .catch(() => {
             root.innerHTML = '<div class="p-6 rounded-2xl bg-white border border-slate-200 text-sm text-slate-600">Failed to load widget configuration.</div>';

@@ -1,6 +1,10 @@
 <?php
 
 $brandId = isset($_GET['brandId']) ? htmlspecialchars($_GET['brandId'], ENT_QUOTES, 'UTF-8') : 'default';
+$isEmbedded = isset($_GET['embed']) && $_GET['embed'] === '1';
+$assetBaseUrl = isset($_GET['assetBaseUrl']) && is_string($_GET['assetBaseUrl'])
+  ? htmlspecialchars($_GET['assetBaseUrl'], ENT_QUOTES, 'UTF-8')
+  : '/assets';
 ?>
 <!doctype html>
 <html lang="en">
@@ -10,8 +14,8 @@ $brandId = isset($_GET['brandId']) ? htmlspecialchars($_GET['brandId'], ENT_QUOT
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-screen bg-slate-200 flex items-center justify-center p-4">
-    <div id="chat-root" class="w-full max-w-[440px] h-[min(620px,calc(100vh-2rem))]"></div>
+  <body class="<?php echo $isEmbedded ? 'h-screen bg-slate-200 flex items-center justify-center' : 'min-h-screen bg-slate-200 flex items-center justify-center p-4'; ?>">
+    <div id="chat-root" class="<?php echo $isEmbedded ? 'w-full h-full' : 'w-full max-w-[440px] h-[min(620px,calc(100vh-2rem))]'; ?>"></div>
 
     <script>
       (function () {
@@ -19,6 +23,8 @@ $brandId = isset($_GET['brandId']) ? htmlspecialchars($_GET['brandId'], ENT_QUOT
         if (!root) return;
 
         const brandId = '<?php echo $brandId; ?>';
+        const isEmbedded = <?php echo $isEmbedded ? 'true' : 'false'; ?>;
+        const assetBaseUrl = '<?php echo $assetBaseUrl; ?>';
 
         const state = {
           messages: [],
@@ -221,7 +227,7 @@ $brandId = isset($_GET['brandId']) ? htmlspecialchars($_GET['brandId'], ENT_QUOT
                 '</div>' +
 
                 '<div class="flex items-center gap-2 text-slate-600">' +
-                  '<a href="voice.php?brandId=' + encodeURIComponent(brandId) + '" class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs hover:bg-slate-100 transition">Voice</a>' +
+                  '<a href="voice.php?brandId=' + encodeURIComponent(brandId) + (isEmbedded ? '&embed=1' : '') + '&assetBaseUrl=' + encodeURIComponent(assetBaseUrl) + '" class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs hover:bg-slate-100 transition">Voice</a>' +
                   '<button id="chat-reset" class="w-9 h-9 rounded-full hover:bg-slate-200 transition flex items-center justify-center" title="Reset chat"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><path d="M3 12a9 9 0 1 0 3-6.708"/><path d="M3 3v6h6"/></svg></button>' +
                   '<button id="chat-close" class="w-9 h-9 rounded-full hover:bg-slate-200 transition flex items-center justify-center" title="Close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>' +
                 '</div>' +

@@ -21,6 +21,7 @@ final class BrandService
 
         return $this->brands['default'] ?? [
             'mode' => 'chat_only',
+            'assetBaseUrl' => '/assets',
             'brand' => [
                 'title' => 'Spice Garden',
                 'subtitle' => 'AI Assistant',

@@ -37,6 +37,7 @@ if ($uri === '/api/brand-config' && $_SERVER['REQUEST_METHOD'] === 'GET') {
     jsonResponse(200, [
         'brandId' => $brandId,
         'mode' => $brandConfig['mode'],
+        'assetBaseUrl' => $brandConfig['assetBaseUrl'] ?? '/assets',
         'brand' => $brandConfig['brand'],
         'voiceEnabled' => $brandConfig['voiceEnabled'],
         'intents' => $intents,
