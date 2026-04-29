@@ -1,4 +1,4 @@
-# UD Voice Chat Agent
+# Voice & Chat Agent
 
 A dual-mode (chat + voice) AI ordering assistant for restaurants. Powered by Google Gemini, it lets customers browse the menu, build an order, and pay — all through natural conversation, whether they type or speak.
 
@@ -6,12 +6,12 @@ A dual-mode (chat + voice) AI ordering assistant for restaurants. Powered by Goo
 
 ## What Is This?
 
-**UD Voice Chat Agent** is a self-contained restaurant AI assistant that runs as a lightweight PHP web app. It ships a persona called **Nuno** and is pre-configured for a demo restaurant called *Spice Garden*.
+**Voice & Chat Agent** is a self-contained restaurant AI assistant that runs as a lightweight PHP web app. It ships a persona called **Nuno** and is pre-configured for a demo restaurant called *Spice Garden*.
 
 Two interaction modes are available:
 
 | Mode | How it works |
-|------|-------------|
+|------|--------------|
 | **Chat** | Type messages → PHP backend calls Gemini → structured reply rendered in browser |
 | **Voice** | Speak → browser streams audio directly to Gemini Live API → Gemini speaks back in real time |
 
@@ -22,7 +22,7 @@ Both modes share the same tool set and business logic; only the transport and re
 ## Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
+|-------|------------|
 | **LLM** | Google Gemini 2.5 Flash (chat) · Gemini Live API (voice) |
 | **Backend** | PHP 8.2, no framework — plain classes and a router in `server.php` |
 | **Frontend** | Vanilla JavaScript · Tailwind CSS (CDN) · PHP-rendered HTML |
