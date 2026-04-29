@@ -23,7 +23,7 @@ $assetBaseUrl = isset($_GET['assetBaseUrl']) && is_string($_GET['assetBaseUrl'])
             <span class="font-semibold text-lg leading-none">N</span>
           </div>
           <div>
-            <div class="font-semibold text-slate-900 text-3xl leading-none">Nuno</div>
+            <div class="font-semibold text-slate-900 text-3xl leading-none">Restraunt X</div>
             <div class="text-xs text-slate-500">AI Voice Assistant</div>
           </div>
         </div>

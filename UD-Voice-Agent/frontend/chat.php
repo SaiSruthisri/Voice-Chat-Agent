@@ -221,7 +221,7 @@ $assetBaseUrl = isset($_GET['assetBaseUrl']) && is_string($_GET['assetBaseUrl'])
                     '<span class="font-semibold text-lg">N</span>' +
                   '</div>' +
                   '<div>' +
-                    '<div class="font-semibold text-slate-900 text-3xl leading-none">Nuno</div>' +
+                    '<div class="font-semibold text-slate-900 text-3xl leading-none">Restraunt X</div>' +
                     '<div class="text-xs text-slate-500">AI Chat Assistant</div>' +
                   '</div>' +
                 '</div>' +
@@ -373,7 +373,7 @@ $assetBaseUrl = isset($_GET['assetBaseUrl']) && is_string($_GET['assetBaseUrl'])
           if (!latest) {
             state.messages.push({
               role: 'model',
-              content: 'Hi, welcome to Nuno. Tell me what you want to order.',
+              content: 'Hi, welcome to Restraunt X. Tell me what you want to order.',
               state: 'IDLE'
             });
             render();

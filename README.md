@@ -6,7 +6,7 @@ A dual-mode (chat + voice) AI ordering assistant for restaurants. Powered by Goo
 
 ## What Is This?
 
-**Voice & Chat Agent** is a self-contained restaurant AI assistant that runs as a lightweight PHP web app. It ships a persona called **Nuno** and is pre-configured for a demo restaurant called *Spice Garden*.
+**Voice & Chat Agent** is a self-contained restaurant AI assistant that runs as a lightweight PHP web app. It ships a persona called **Restraunt X** and is pre-configured for a demo restaurant called *Spice Garden*.
 
 Two interaction modes are available:
 
